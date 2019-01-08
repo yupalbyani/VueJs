@@ -13,7 +13,7 @@
         <button id="clear" class="btn btn-sm btn-primary" v-if="clearBtnDisplay" @click="reset">Clear</button>
     </div><!--fileUpload-->
     <div class="chartBlock">
-       <linechart v-if="mapDisplay" v-bind:dataSets ="dataSets" v-bind:labels="labels"></linechart>
+       <linechart v-bind:dataSets ="dataSets" v-bind:labels="labels"></linechart>
     </div>
   </div>
 </template>
@@ -23,52 +23,30 @@ export default {
   components: {
     
   },
-  watch:{
-      mapDisplay(n,o){
-         this.dummy(n);
-      }
-  },
   data () {
     return {
       title:"Line Chart",
       uploadfiledata:"",
       initialArr : [],
-      dataOnXaxis : [],
-      dataOnYaxis: [],
+      uniqueArray:[],
       labels:[],
       dataSets : [],
       collection:{},
       getChartBtnDisplay : false,
       clearBtnDisplay : false,
-      mapDisplay : true
     }
   },// end of data
   methods: {
-      dummy(n){
-          console.log(n)
-          if(n == true){
-              this.mapDisplay = true
-          }else{
-               this.mapDisplay = false
-          }
-          
-      },
-      ShowIndex(mapDisplay){
-        console.log(a)
-        this.mapDisplay=a
-      },
       loadTextFromFile (ev) {
           const file = ev.target.files[0];
           const reader = new FileReader();
           reader.onload = e => {
-          // this.$emit("load", e.target.result)
             this.uploadfiledata = e.target.result;
           };
           reader.readAsText(file);
           this.getChartBtnDisplay = true;
           this.clearBtnDisplay = true
       }, // end of loadTextFromFile method
-
       reset(){
         const input = this.$refs.fileInput
         input.type = 'text'
@@ -81,12 +59,13 @@ export default {
       },// reset the input field
 
        ChartData(){
+          // displaying the chart block 
           $(".chartBlock").show();
           //creating the json object related to the chart
           if(this.uploadfiledata == ''){
               alert("Please Upload The File")
           }else{
-              this.mapDisplay = true
+
               this.uploadfiledata.split("\n").filter((data) => {
                   if(data!=""){
                       this.initialArr.push(data)
@@ -108,20 +87,11 @@ export default {
                           Obj["label"] = value;
                       }
                   })
-                  Obj["data"] =dataarr;
+                  Obj["data"] = dataarr;
                   Obj["background-color"] = "green";
                   this.dataSets.push(Obj)
               })
-              console.log(this.dataSets)
-
-              if(this.dataSets) {
-                  console.log('ggggggggggggggg')
-
-                  console.log(this.dataSets)
-              }
-
           }// end of if condition for uploadFile data
-          
       },// end of chart data
   },// end of methods
 }

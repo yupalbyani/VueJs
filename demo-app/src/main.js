@@ -15,15 +15,12 @@ Vue.component('linechart', {
         this.emptymap()
       }else{
         this.demoMethod()
-        this.$emit('ShowIndex',true)
       }
     },
     labels(newvalue,oldvalue){
       if(newvalue.length==0){
         this.emptymap()
       }else{
-        this.$emit('ShowIndex',true)
-
         this.demoMethod()
       }
     }
@@ -33,16 +30,11 @@ Vue.component('linechart', {
   created() {
   },
   methods: {
-    xxxxx: function(){
-      alert("sddd")
-    },
-    emptymap : function(){
+    emptymap(){
       this.renderChart(
         {
           labels: "",
-          datasets: [
-            
-          ]
+          datasets: []
        },
         {
           responsive: true,
@@ -52,7 +44,7 @@ Vue.component('linechart', {
       )
     },
 
-    demoMethod: function()  {
+    demoMethod()  {
       this.renderChart(
         {
           labels: this.labels,
@@ -97,7 +89,4 @@ Vue.component('linechart', {
 new Vue({
   el: '#app',
   render:h=>h(App)
-  // router,
-  // components: { App },
-  // template: '<App/>'
 })
